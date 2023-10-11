@@ -58,13 +58,12 @@ def main(iter_id, instance_name, solutions, solution_ids):
                         if idx1 == idx2 or idx2 == 0:
                             limited_improvements += 1
 
-
-        total_options = numR_P1 * numR_P2 * (Max_to_move-1)
-        limited_options = max(numR_P1, numR_P2) * (Max_to_move-1)
+        total_options = numR_P1 * numR_P2 * (Max_to_move - 1)
+        limited_options = max(numR_P1, numR_P2) * (Max_to_move - 1)
         labels.append(label_improv)
         labels_cat.append(label_categ)
-        random_acc_list.append(total_improvements/total_options)
-        lim_random_acc_list.append(limited_improvements/limited_options)
+        random_acc_list.append(total_improvements / total_options)
+        lim_random_acc_list.append(limited_improvements / limited_options)
 
     raw_data = {
         "route_instance_name": instance_name,
@@ -82,12 +81,9 @@ def main(iter_id, instance_name, solutions, solution_ids):
 
 
 if __name__ == "__main__":
-
-
-    with open(f"data/raw_model_data/X-n439-k37_rawdata_0.pkl", 'rb') as handle:
+    with open(f"data/solutions/just_solutions.pkl", 'rb') as handle:
         solutions = pickle.load(handle)
 
-
+    instance_name = "X-n439-k37"
     # TODO: itertools.permutations
-    print(solutions)
-
+    main(0, instance_name, solutions, [0, 1, 2, 3])

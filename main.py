@@ -88,5 +88,5 @@ if __name__ == "__main__":
         solutions = pickle.load(handle)
 
 
-    # TODO: Use permutations instead of product from itertools it has no combinations with itself i.e. (1,1) (2,2)
-    main(0, instance_name, solutions[0:2], [1, 2])
+    print(solutions)
+

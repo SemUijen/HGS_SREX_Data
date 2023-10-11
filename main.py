@@ -88,5 +88,6 @@ if __name__ == "__main__":
         solutions = pickle.load(handle)
 
 
+    # TODO: itertools.permutations
     print(solutions)
 

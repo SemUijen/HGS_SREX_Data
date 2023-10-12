@@ -2,13 +2,14 @@ from multiprocessing import Pool
 import pickle
 import numpy as np
 import os
-
+from itertools import permutations
 from tqdm import tqdm
+
 from utils.label_functions import solve_srex_options
 from utils.read_input import read_input
+from utils.IndexSampler import IndexSampler
 
 from pyvrp import read, Solution
-from itertools import permutations
 
 
 def main(iter_id, instance_name, solutions, solution_ids):
@@ -20,7 +21,6 @@ def main(iter_id, instance_name, solutions, solution_ids):
         labels = []
         labels_cat = []
 
-
         random_acc_list = []
         lim_random_acc_list = []
         couple_id_list = []
@@ -30,9 +30,11 @@ def main(iter_id, instance_name, solutions, solution_ids):
         tw_pen = 6
 
         couple_ids = list(map(tuple, permutations(solution_ids[group_id], r=2)))
-        couple_iter = permutations(solution_ids[group_id], r=2)
+        couple_iter = permutations([1, 2, 3, 4], r=2)
+
         print(couple_ids)
         sol_group = solutions[group_id]
+        begin_id = 1
 
         for sol_idx1, sol_idx2 in couple_iter:
 
@@ -48,9 +50,22 @@ def main(iter_id, instance_name, solutions, solution_ids):
             label_improv = np.zeros(label_shape, dtype=float)
             label_categ = np.zeros(label_shape, dtype=int)
 
+            # alternate starting indices
+            # grid_id is used to create a grid within the matrix that is calculated
+            if begin_id == 1:
+                grid_id = 2
+                begin_id = 2
+            else:
+                grid_id = 1
+                begin_id = 1
+
             for idx1 in tqdm(range(0, numR_P1)):
+                if numR_P2 % 2 == 0:
+                    grid_id = 2 if grid_id == 1 else 1
                 for idx2 in range(0, numR_P2):
-                    for numRoutesMove in range(1, Max_to_move):
+                    grid_id = 2 if grid_id == 1 else 1
+                    for numRoutesMove in range(grid_id, Max_to_move, 2):
+
                         abs_improv, category = solve_srex_options(data=INSTANCE, seed=42, couple=(parent1, parent2),
                                                                   idx=(idx1, idx2), couple_id=couple_id, capP=cap_pen,
                                                                   twP=tw_pen, moves=numRoutesMove)
@@ -96,20 +111,37 @@ if __name__ == "__main__":
     pool_iterable = []
     instance_names = ["X-n439-k37", "X-n439-k37", "X-n439-k37"]
 
+    indexSampler = IndexSampler(array_group1.max())
+
     for i in range(array_group1.max()):
         temp_ids = []
         temp_sols = []
 
-        temp_sols.append(list(array_sol1[array_group1 == i]))
-        temp_sols.append(list(array_sol1[array_group1 == i]))
-        temp_sols.append(list(array_sol1[array_group1 == i]))
+        i1, i2, i3, i4, i5, i6 = indexSampler.sample_index()
 
-        temp_ids.append(list(array_sol1_ids[array_group1 == i]))
-        temp_ids.append(list(array_sol1_ids[array_group1 == i]))
-        temp_ids.append(list(array_sol1_ids[array_group1 == i]))
+        temp_sols.append(list(array_sol1[array_group1 == i1]))
+        temp_sols.append(list(array_sol1[array_group1 == i2]))
+        temp_sols.append(list(array_sol1[array_group1 == i3]))
+        temp_sols.append(list(array_sol1[array_group1 == i4]))
+        temp_sols.append(list(array_sol1[array_group1 == i5]))
+        temp_sols.append(list(array_sol1[array_group1 == i6]))
 
-        pool_iterable.append((i,instance_names, temp_sols, temp_ids))
-        break
+        temp_ids.append(list(array_sol1_ids[array_group1 == i1]))
+        temp_ids.append(list(array_sol1_ids[array_group1 == i2]))
+        temp_ids.append(list(array_sol1_ids[array_group1 == i3]))
+        temp_ids.append(list(array_sol1_ids[array_group1 == i4]))
+        temp_ids.append(list(array_sol1_ids[array_group1 == i5]))
+        temp_ids.append(list(array_sol1_ids[array_group1 == i6]))
 
-    ite, instance_name, sol, ids = pool_iterable[0]
-    main(ite, instance_name, sol, ids)
+
+        pool_iterable.append((i, instance_names, temp_sols, temp_ids))
+
+
+
+
+    """    with Pool(processes=2) as pool:
+        iter_batches = pool.starmap(main, pool_iterable)
+
+        for iter_batch in iter_batches:
+            print(iter_batch)"""
+

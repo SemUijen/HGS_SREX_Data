@@ -15,21 +15,14 @@
 #SBATCH --mail-user=s.j.uijen@tilburguniversity.edu
 
 # Setup modules
-if [ ! -z "${SLURM_JOB_ID}" ]; then
-    module load Python/3.10.4-GCCcore-11.3.0
-    module purge
-    module load 2022
-    module load aiohttp/3.8.3-GCCcore-11.3.0
-    module load matplotlib/3.5.2-foss-2022a
-    module load PyTorch/1.12.0-foss-2022a-CUDA-11.7.0
-    module load SciPy-bundle/2022.05-foss-2022a
-    module load TensorFlow/2.11.0-foss-2022a-CUDA-11.7.0
-    module load torchvision/0.13.1-foss-2022a-CUDA-11.7.0
-fi
+module load 2022
+module load Python/3.10.4-GCCcore-11.3.0
+module purge
+
 
 # Log versions
-echo "PYTHON_VERSION = $(python3.10 --version)"
-echo "PIP_VERSION = $(pip3.10 --version)"
+echo "PYTHON_VERSION = $(python --version)"
+echo "PIP_VERSION = $(pip --version)"
 
 # Setup environment
 if [ -f .env ]; then
@@ -38,11 +31,11 @@ fi
 export PYTHONPATH=src
 
 # Setup dependencies
-pip3.10 install -q \
+pip install -q \
     tqdm \
     numpy \
     pyvrp \
 
 
 # Run experiment
-python3.10 -m main
+python -m main

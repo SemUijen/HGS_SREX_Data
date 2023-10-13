@@ -1,13 +1,16 @@
 #!/bin/bash
-#SBATCH --job-name=case-study-base-model
-#SBATCH --output=case-study-base-model-%j.out
-#SBATCH --error=case-study-base-model-%j.error
+#SBATCH --job-name=test_creation_speed
+#SBATCH --output=test_creation_speed-%j.out
+#SBATCH --error=test_creation_speed-%j.error
 #SBATCH --chdir /home/suijen/HGS_SREX_Data
 #SBATCH --export=ALL
 #SBATCH --get-user-env=L
-#SBATCH --partition=gpu
-#SBATCH --gpus=1
-#SBATCH --time=04:00:00
+
+#SBATCH --partition=genoa
+#SBATCH --nodes=1
+#SBATCH --ntasks=18
+#SBATCH --time=02:00:00
+
 #SBATCH --mail-type=BEGIN,END,FAIL
 #SBATCH --mail-user=s.j.uijen@tilburguniversity.edu
 

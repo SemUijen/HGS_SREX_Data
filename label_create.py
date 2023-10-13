@@ -2,14 +2,17 @@ import pickle
 from itertools import permutations
 from tqdm import tqdm
 import numpy as np
-
+import time
+import datetime
 from utils.label_functions import solve_srex_options
 
 from pyvrp import read
 
 
 def main_grid(iter_id, instance_name, solutions, solution_ids):
-    print(f"started_{iter_id}_nrGroups: {len(solution_ids)} ")
+
+    start = time.perf_counter()
+    print(f"started_{iter_id} -- nrGroups: {len(solution_ids)} -- started at: {datetime.datetime.now()}")
     for group_id in range(len(solution_ids)):
 
         if instance_name[group_id] in ["R2_8_9", 'RC2_10_5']:
@@ -31,7 +34,6 @@ def main_grid(iter_id, instance_name, solutions, solution_ids):
         couple_ids = list(map(tuple, permutations(solution_ids[group_id], r=2)))
         couple_iter = permutations([1, 2, 3, 4], r=2)
 
-        print(couple_ids)
         sol_group = solutions[group_id]
         begin_id = 1
 
@@ -58,7 +60,7 @@ def main_grid(iter_id, instance_name, solutions, solution_ids):
                 grid_id = 1
                 begin_id = 1
 
-            for idx1 in tqdm(range(0, numR_P1)):
+            for idx1 in range(0, numR_P1):
                 if numR_P2 % 2 == 0:
                     grid_id = 2 if grid_id == 1 else 1
                 for idx2 in range(0, numR_P2):
@@ -99,11 +101,13 @@ def main_grid(iter_id, instance_name, solutions, solution_ids):
     with open(f"data/raw_model_data/batch_{iter_id}_rawdata.pkl", "wb") as handle:
         pickle.dump(raw_data, handle)
 
-    return f"Process finished {iter_id}"
+    return f"Process finished {iter_id}: time in minutes= {(time.perf_counter() - start)/60}"
 
 
 def main_full(iter_id, instance_name, solutions, solution_ids):
-    print(f"started_{iter_id}_nrGroups: {len(solution_ids)} ")
+
+    start = time.perf_counter()
+    print(f"started_{iter_id} -- nrGroups: {len(solution_ids)} -- started at: {datetime.datetime.now()}")
     for group_id in range(len(solution_ids)):
 
         if instance_name[group_id] in ["R2_8_9", 'RC2_10_5']:
@@ -125,7 +129,6 @@ def main_full(iter_id, instance_name, solutions, solution_ids):
         couple_ids = list(map(tuple, permutations(solution_ids[group_id], r=2)))
         couple_iter = permutations([1, 2, 3, 4], r=2)
 
-        print(couple_ids)
         sol_group = solutions[group_id]
 
         for sol_idx1, sol_idx2 in couple_iter:
@@ -144,7 +147,8 @@ def main_full(iter_id, instance_name, solutions, solution_ids):
 
             # alternate starting indices
             # grid_id is used to create a grid within the matrix that is calculated
-            for idx1 in tqdm(range(0, numR_P1)):
+
+            for idx1 in range(0, numR_P1):
                 for idx2 in range(0, numR_P2):
                     for numRoutesMove in range(1, Max_to_move):
 
@@ -182,4 +186,4 @@ def main_full(iter_id, instance_name, solutions, solution_ids):
     with open(f"data/raw_model_data/batch_{iter_id}_rawdata.pkl", "wb") as handle:
         pickle.dump(raw_data, handle)
 
-    return f"Process finished {iter_id}"
+    return f"Process finished {iter_id}: time in minutes= {(time.perf_counter() - start)/60}"

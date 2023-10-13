@@ -21,8 +21,8 @@ module purge
 
 
 # Log versions
-echo "PYTHON_VERSION = $(python --version)"
-echo "PIP_VERSION = $(pip --version)"
+echo "PYTHON_VERSION = $(python3.10 --version)"
+echo "PIP_VERSION = $(pip3.10 --version)"
 
 # Setup environment
 if [ -f .env ]; then
@@ -31,11 +31,11 @@ fi
 export PYTHONPATH=src
 
 # Setup dependencies
-pip install -q \
+pip3.10 install -q \
     tqdm \
     numpy \
     pyvrp \
 
 
 # Run experiment
-python -m main
+python3.10 -m main

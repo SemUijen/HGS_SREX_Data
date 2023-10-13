@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=test_creation_speed
-#SBATCH --output=test_creation_speed-%j.out
-#SBATCH --error=test_creation_speed-%j.error
+#SBATCH --output=logging/test_creation_speed-%j.out
+#SBATCH --error=logging/test_creation_speed-%j.error
 #SBATCH --chdir /home/suijen/HGS_SREX_Data
 #SBATCH --export=ALL
 #SBATCH --get-user-env=L

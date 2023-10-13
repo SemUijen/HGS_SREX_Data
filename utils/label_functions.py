@@ -1,6 +1,3 @@
-# import custom srex
-from itertools import product, chain
-import numpy as np
 from typing import Tuple
 
 from pyvrp import read, ProblemData

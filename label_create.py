@@ -7,11 +7,12 @@ import datetime
 from utils.label_functions import solve_srex_options
 
 from pyvrp import read
-
+import logging
 
 def main_grid(iter_id, instance_name, solutions, solution_ids):
 
     start = time.perf_counter()
+    logging.info(f"started_{iter_id} -- nrGroups: {len(solution_ids)} -- started at: {datetime.datetime.now()}")
     print(f"started_{iter_id} -- nrGroups: {len(solution_ids)} -- started at: {datetime.datetime.now()}")
     for group_id in range(len(solution_ids)):
 
@@ -102,12 +103,14 @@ def main_grid(iter_id, instance_name, solutions, solution_ids):
     with open(f"data/raw_model_data/batch_{iter_id}_rawdata.pkl", "wb") as handle:
         pickle.dump(raw_data, handle)
 
+    logging.info(f"Process finished {iter_id}: time in minutes= {(time.perf_counter() - start) / 60}")
     return f"Process finished {iter_id}: time in minutes= {(time.perf_counter() - start)/60}"
 
 
 def main_full(iter_id, instance_name, solutions, solution_ids):
 
     start = time.perf_counter()
+    logging.info(f"started_{iter_id} -- nrGroups: {len(solution_ids)} -- started at: {datetime.datetime.now()}")
     print(f"started_{iter_id} -- nrGroups: {len(solution_ids)} -- started at: {datetime.datetime.now()}")
     for group_id in range(len(solution_ids)):
 
@@ -188,5 +191,5 @@ def main_full(iter_id, instance_name, solutions, solution_ids):
     }
     with open(f"data/raw_model_data/batch_{iter_id}_rawdata.pkl", "wb") as handle:
         pickle.dump(raw_data, handle)
-
+    logging.info(f"Process finished {iter_id}: time in minutes= {(time.perf_counter() - start)/60}")
     return f"Process finished {iter_id}: time in minutes= {(time.perf_counter() - start)/60}"

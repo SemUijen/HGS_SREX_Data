@@ -10,7 +10,6 @@ from pyvrp import read
 import logging
 
 def main_grid(iter_id, instance_name, solutions, solution_ids):
-def main_grid(iter_id, instance_name, solutions, solution_ids):
 
     start = time.perf_counter()
     logging.warning(f"started_{iter_id} -- nrGroups: {len(solution_ids)} -- started at: {datetime.datetime.now()}")

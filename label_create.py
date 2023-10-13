@@ -10,9 +10,10 @@ from pyvrp import read
 import logging
 
 def main_grid(iter_id, instance_name, solutions, solution_ids):
+def main_grid(iter_id, instance_name, solutions, solution_ids):
 
     start = time.perf_counter()
-    logging.info(f"started_{iter_id} -- nrGroups: {len(solution_ids)} -- started at: {datetime.datetime.now()}")
+    logging.warning(f"started_{iter_id} -- nrGroups: {len(solution_ids)} -- started at: {datetime.datetime.now()}")
     print(f"started_{iter_id} -- nrGroups: {len(solution_ids)} -- started at: {datetime.datetime.now()}")
     for group_id in range(len(solution_ids)):
 
@@ -110,7 +111,7 @@ def main_grid(iter_id, instance_name, solutions, solution_ids):
 def main_full(iter_id, instance_name, solutions, solution_ids):
 
     start = time.perf_counter()
-    logging.info(f"started_{iter_id} -- nrGroups: {len(solution_ids)} -- started at: {datetime.datetime.now()}")
+    logging.warning(f"started_{iter_id} -- nrGroups: {len(solution_ids)} -- started at: {datetime.datetime.now()}")
     print(f"started_{iter_id} -- nrGroups: {len(solution_ids)} -- started at: {datetime.datetime.now()}")
     for group_id in range(len(solution_ids)):
 
@@ -127,8 +128,8 @@ def main_full(iter_id, instance_name, solutions, solution_ids):
         couple_id_list = []
         solution_list = []
         couple_id = 0
-        cap_pen = 400
-        tw_pen = 6
+        cap_pen = 200
+        tw_pen = 4
 
         couple_ids = list(map(tuple, permutations(solution_ids[group_id], r=2)))
         couple_id_list.extend(couple_ids)
@@ -192,5 +193,5 @@ def main_full(iter_id, instance_name, solutions, solution_ids):
     }
     with open(f"data/raw_model_data/batch_{iter_id}_rawdata.pkl", "wb") as handle:
         pickle.dump(raw_data, handle)
-    logging.info(f"Process finished {iter_id}: time in minutes= {(time.perf_counter() - start)/60}")
+    logging.warning(f"Process finished {iter_id}: time in minutes= {(time.perf_counter() - start)/60}")
     return f"Process finished {iter_id}: time in minutes= {(time.perf_counter() - start)/60}"

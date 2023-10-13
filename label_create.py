@@ -170,7 +170,7 @@ def main_full(iter_id, instance_name, solutions, solution_ids):
                             if idx1 == idx2 or idx2 == 0:
                                 limited_improvements += 1
 
-
+            logging.warning(f"finished_{instance_name[group_id]} -- label shape: {label_shape} -- started at: {datetime.datetime.now()}")
             total_options = numR_P1 * numR_P2 * (Max_to_move - 1)
             limited_options = max(numR_P1, numR_P2) * (Max_to_move - 1)
             labels.append(label_improv)

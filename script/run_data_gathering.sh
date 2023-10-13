@@ -9,7 +9,7 @@
 #SBATCH --partition=genoa
 #SBATCH --nodes=1
 #SBATCH --ntasks=18
-#SBATCH --time=03:00:00
+#SBATCH --time=04:00:00
 
 #SBATCH --mail-type=BEGIN,END,FAIL
 #SBATCH --mail-user=s.j.uijen@tilburguniversity.edu

@@ -49,7 +49,7 @@ if __name__ == "__main__":
     sol7_id = []
     sol8_id = []
     sol9_id = []
-    for i in range(2):
+    for i in range(6,8):
         i1, i2, i3, i4, i5, i6, i7, i8, i9 = i,i,i,i,i,i,i,i,i
         sol1.append(list(array_sol1[array_group1 == i1]))
         sol2.append(list(array_sol2[array_group2 == i2]))
@@ -74,9 +74,9 @@ if __name__ == "__main__":
 
     instance_names = ["X-n439-k37", "X-n502-k39", "X-n449-k29", "ORTEC-n405-k18", "ORTEC-n510-k23", "ORTEC-n455-k41", "ORTEC-VRPTW-ASYM-0bdff870-d1-n458-k35", "R2_8_9", 'RC2_10_5']
 
-    pool_iterable = [(1, ["X-n439-k37"], sol1[:1], sol1_id[:1]), (2, ["X-n502-k39"], sol2[:1], sol2_id[:1]), (3, ["X-n449-k29"], sol3[:1], sol3_id[:1]),(4, [ "ORTEC-n405-k18"], sol4[:1], sol4_id[:1]),(5, ["ORTEC-n510-k23"], sol5[:1], sol5_id[:1]),(6, ["ORTEC-n455-k41"], sol6[:1], sol6_id[:1]), (7, ["ORTEC-VRPTW-ASYM-0bdff870-d1-n458-k35"], sol7[:1], sol7_id[:1]),(8, ["R2_8_9"], sol8[:1], sol8_id[:1]),(9, ['RC2_10_5'], sol9[:1], sol9_id[:1]), (11, ["X-n439-k37"], sol1[1:2], sol1_id[1:2]), (21, ["X-n502-k39"], sol2[1:2], sol2_id[1:2]), (31, ["X-n449-k29"], sol3[1:2], sol3_id[1:2]),(41, [ "ORTEC-n405-k18"], sol4[1:2], sol4_id[1:2]),(51, ["ORTEC-n510-k23"], sol5[1:2], sol5_id[1:2]),(61, ["ORTEC-n455-k41"], sol6[1:2], sol6_id[1:2]), (71, ["ORTEC-VRPTW-ASYM-0bdff870-d1-n458-k35"], sol7[1:2], sol7_id[1:2]), (81, ["R2_8_9"], sol8[1:2], sol8_id[1:2]), (91, ['RC2_10_5'], sol9[1:2], sol9_id[1:2])]
+    pool_iterable = [(12, ["X-n439-k37"], sol1[:1], sol1_id[:1]), (22, ["X-n502-k39"], sol2[:1], sol2_id[:1]), (32, ["X-n449-k29"], sol3[:1], sol3_id[:1]),(42, [ "ORTEC-n405-k18"], sol4[:1], sol4_id[:1]),(52, ["ORTEC-n510-k23"], sol5[:1], sol5_id[:1]),(62, ["ORTEC-n455-k41"], sol6[:1], sol6_id[:1]), (72, ["ORTEC-VRPTW-ASYM-0bdff870-d1-n458-k35"], sol7[:1], sol7_id[:1]),(82, ["R2_8_9"], sol8[:1], sol8_id[:1]),(92, ['RC2_10_5'], sol9[:1], sol9_id[:1]), (112, ["X-n439-k37"], sol1[1:2], sol1_id[1:2]), (212, ["X-n502-k39"], sol2[1:2], sol2_id[1:2]), (312, ["X-n449-k29"], sol3[1:2], sol3_id[1:2]),(412, [ "ORTEC-n405-k18"], sol4[1:2], sol4_id[1:2]),(512, ["ORTEC-n510-k23"], sol5[1:2], sol5_id[1:2]),(612, ["ORTEC-n455-k41"], sol6[1:2], sol6_id[1:2]), (712, ["ORTEC-VRPTW-ASYM-0bdff870-d1-n458-k35"], sol7[1:2], sol7_id[1:2]), (812, ["R2_8_9"], sol8[1:2], sol8_id[1:2]), (912, ['RC2_10_5'], sol9[1:2], sol9_id[1:2])]
     print(multiprocessing.cpu_count())
-    with Pool() as pool:
+    with Pool(processes=1) as pool:
         iter_batches = pool.starmap(main_full, pool_iterable)
 
         for iter_batch in iter_batches:

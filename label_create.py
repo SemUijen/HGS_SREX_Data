@@ -188,6 +188,7 @@ def main_full(iter_id, instance_name, solutions, solution_ids):
         "labels_cat": labels_cat,
         "random_acc": random_acc_list,
         "random_acc_limit": lim_random_acc_list,
+        "runtime": (time.perf_counter() - start)/60,
     }
     with open(f"data/raw_model_data/batch_{iter_id}_rawdata.pkl", "wb") as handle:
         pickle.dump(raw_data, handle)

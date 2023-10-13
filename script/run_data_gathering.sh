@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=test_creation_speed
-#SBATCH --output=test_creation_speed-%j.out
-#SBATCH --error=test_creation_speed-%j.error
+#SBATCH --output=/logging/test_creation_speed-%j.out
+#SBATCH --error=/logging/test_creation_speed-%j.error
 #SBATCH --chdir /home/suijen/HGS_SREX_Data
 #SBATCH --export=ALL
 #SBATCH --get-user-env=L
@@ -9,7 +9,7 @@
 #SBATCH --partition=genoa
 #SBATCH --nodes=1
 #SBATCH --ntasks=18
-#SBATCH --time=02:00:00
+#SBATCH --time=0:00:00
 
 #SBATCH --mail-type=BEGIN,END,FAIL
 #SBATCH --mail-user=s.j.uijen@tilburguniversity.edu
@@ -25,6 +25,9 @@ if [ ! -z "${SLURM_JOB_ID}" ]; then
     module load TensorFlow/2.11.0-foss-2022a-CUDA-11.7.0
     module load torchvision/0.13.1-foss-2022a-CUDA-11.7.0
 fi
+
+#Create output directory on scratch
+mkdir "$TMPDIR"/output_dir
 
 # Log versions
 echo "PYTHON_VERSION = $(python3.10 --version)"
@@ -43,6 +46,8 @@ pip3.10 install -q \
     pyvrp \
 
 
-
 # Run experiment
 python3.10 -m main
+
+#Copy output directory from scratch to home
+cp -r "$TMPDIR"/output_dir $HOME

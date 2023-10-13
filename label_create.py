@@ -32,6 +32,8 @@ def main_grid(iter_id, instance_name, solutions, solution_ids):
         tw_pen = 6
 
         couple_ids = list(map(tuple, permutations(solution_ids[group_id], r=2)))
+        couple_id_list.extend(couple_ids)
+        solution_list.extend(solutions)
         couple_iter = permutations([1, 2, 3, 4], r=2)
 
         sol_group = solutions[group_id]
@@ -87,11 +89,10 @@ def main_grid(iter_id, instance_name, solutions, solution_ids):
             labels_cat.append(label_categ)
             random_acc_list.append(total_improvements / total_options)
             lim_random_acc_list.append(limited_improvements / limited_options)
-            couple_id_list.extend(couple_ids)
-            solution_list.extend(solutions)
+
 
     raw_data = {
-        "parent_routes": solutions,
+        "parent_routes": solution_list,
         "parent_couple_idx": couple_id_list,
         "labels": labels,
         "labels_cat": labels_cat,
@@ -127,6 +128,8 @@ def main_full(iter_id, instance_name, solutions, solution_ids):
         tw_pen = 6
 
         couple_ids = list(map(tuple, permutations(solution_ids[group_id], r=2)))
+        couple_id_list.extend(couple_ids)
+        solution_list.extend(solutions)
         couple_iter = permutations([1, 2, 3, 4], r=2)
 
         sol_group = solutions[group_id]
@@ -172,8 +175,8 @@ def main_full(iter_id, instance_name, solutions, solution_ids):
             labels_cat.append(label_categ)
             random_acc_list.append(total_improvements / total_options)
             lim_random_acc_list.append(limited_improvements / limited_options)
-            couple_id_list.extend(couple_ids)
-            solution_list.extend(solutions)
+
+
 
     raw_data = {
         "parent_routes": solutions,

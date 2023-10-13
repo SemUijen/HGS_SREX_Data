@@ -136,3 +136,6 @@ dmypy.json
 
 data/raw_model_data/*
 !data/raw_model_data/.gitkeep
+
+logging/*
+!logging/.gitkeep

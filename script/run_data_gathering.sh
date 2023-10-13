@@ -27,9 +27,6 @@ if [ ! -z "${SLURM_JOB_ID}" ]; then
     module load torchvision/0.13.1-foss-2022a-CUDA-11.7.0
 fi
 
-#Create output directory on scratch
-mkdir "$TMPDIR"/output_dir
-
 # Log versions
 echo "PYTHON_VERSION = $(python3.10 --version)"
 echo "PIP_VERSION = $(pip3.10 --version)"
@@ -49,6 +46,3 @@ pip3.10 install -q \
 
 # Run experiment
 python3.10 -m main
-
-#Copy output directory from scratch to home
-cp -r "$TMPDIR"/output_dir $HOME

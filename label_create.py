@@ -53,7 +53,7 @@ def main_grid(iter_id, instance_name, solutions, solution_ids):
             label_shape = (numR_P1, numR_P2, Max_to_move - 1)
             label_improv = np.zeros(label_shape, dtype=float)
             label_categ = np.zeros(label_shape, dtype=int)
-
+            logging.warning(f"started_{instance_name[group_id]} -- label shape: {label_shape} -- started at: {datetime.datetime.now()}")
             # alternate starting indices
             # grid_id is used to create a grid within the matrix that is calculated
             if begin_id == 1:
@@ -82,8 +82,7 @@ def main_grid(iter_id, instance_name, solutions, solution_ids):
                             if idx1 == idx2 or idx2 == 0:
                                 limited_improvements += 1
 
-
-
+            logging.warning(f"finished_{instance_name[group_id]} -- label shape: {label_shape} -- started at: {datetime.datetime.now()}")
             total_options = numR_P1 * numR_P2 * (Max_to_move - 1)
             limited_options = max(numR_P1, numR_P2) * (Max_to_move - 1)
             labels.append(label_improv)

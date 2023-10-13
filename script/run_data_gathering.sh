@@ -16,6 +16,7 @@
 
 # Setup modules
 if [ ! -z "${SLURM_JOB_ID}" ]; then
+    module load Python/3.10.4-GCCcore-11.3.0
     module purge
     module load 2022
     module load aiohttp/3.8.3-GCCcore-11.3.0

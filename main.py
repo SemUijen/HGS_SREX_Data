@@ -13,17 +13,17 @@ from label_create import main_grid, main_full
 
 if __name__ == "__main__":
 
-    instance_names = ["X-n439-k37", "X-n502-k39", "X-n449-k29", "ORTEC-n405-k18", "ORTEC-n510-k23", "ORTEC-n455-k41", "ORTEC-VRPTW-ASYM-0bdff870-d1-n458-k35", "R2_8_9", 'RC2_10_5']
+    instance_names = ["X-n439-k37", "X-n393-k38", "X-n449-k29", "ORTEC-n405-k18", "ORTEC-n510-k23", "X-n573-k30", "ORTEC-VRPTW-ASYM-0bdff870-d1-n458-k35", "R2_8_9", 'R1_4_10']
 
     array_sol1, array_sol1_ids, array_group1 = read_input("X-n439-k37")
-    array_sol2, array_sol2_ids, array_group2 = read_input("X-n502-k39")
+    array_sol2, array_sol2_ids, array_group2 = read_input("X-n393-k38")
     array_sol3, array_sol3_ids, array_group3 = read_input("X-n449-k29")
     array_sol4, array_sol4_ids, array_group4 = read_input("ORTEC-n405-k18")
     array_sol5, array_sol5_ids, array_group5 = read_input("ORTEC-n510-k23")
-    array_sol6, array_sol6_ids, array_group6 = read_input("ORTEC-n455-k41")
+    array_sol6, array_sol6_ids, array_group6 = read_input("X-n573-k30")
     array_sol7, array_sol7_ids, array_group7 = read_input("ORTEC-VRPTW-ASYM-0bdff870-d1-n458-k35")
     array_sol8, array_sol8_ids, array_group8 = read_input("R2_8_9", solomon=True)
-    array_sol9, array_sol9_ids, array_group9 = read_input('RC2_10_5', solomon=True)
+    array_sol9, array_sol9_ids, array_group9 = read_input('R1_4_10', solomon=True)
 
 
 

@@ -53,7 +53,7 @@ def main_grid(iter_id, instance_name, solutions, solution_ids):
             label_shape = (numR_P1, numR_P2, Max_to_move - 1)
             label_improv = np.zeros(label_shape, dtype=float)
             label_categ = np.zeros(label_shape, dtype=int)
-
+            logging.warning(f"started_{instance_name[group_id]} -- label shape: {label_shape} -- started at: {datetime.datetime.now()}")
             # alternate starting indices
             # grid_id is used to create a grid within the matrix that is calculated
             if begin_id == 1:
@@ -127,8 +127,8 @@ def main_full(iter_id, instance_name, solutions, solution_ids):
         couple_id_list = []
         solution_list = []
         couple_id = 0
-        cap_pen = 400
-        tw_pen = 6
+        cap_pen = 200
+        tw_pen = 4
 
         couple_ids = list(map(tuple, permutations(solution_ids[group_id], r=2)))
         couple_id_list.extend(couple_ids)
@@ -171,15 +171,14 @@ def main_full(iter_id, instance_name, solutions, solution_ids):
                             if idx1 == idx2 or idx2 == 0:
                                 limited_improvements += 1
 
-
+            logging.warning(f"finished_{instance_name[group_id]} -- label shape: {label_shape} -- started at: {datetime.datetime.now()}")
             total_options = numR_P1 * numR_P2 * (Max_to_move - 1)
             limited_options = max(numR_P1, numR_P2) * (Max_to_move - 1)
             labels.append(label_improv)
             labels_cat.append(label_categ)
             random_acc_list.append(total_improvements / total_options)
             lim_random_acc_list.append(limited_improvements / limited_options)
-            logging.warning(
-                f"finished_{instance_name[group_id]} -- label shape: {label_shape} -- started at: {datetime.datetime.now()}")
+
 
 
     raw_data = {
@@ -193,5 +192,5 @@ def main_full(iter_id, instance_name, solutions, solution_ids):
     }
     with open(f"data/raw_model_data/batch_{iter_id}_rawdata.pkl", "wb") as handle:
         pickle.dump(raw_data, handle)
-    logging.info(f"Process finished {iter_id}: time in minutes= {(time.perf_counter() - start)/60}")
+    logging.warning(f"Process finished {iter_id}: time in minutes= {(time.perf_counter() - start)/60}")
     return f"Process finished {iter_id}: time in minutes= {(time.perf_counter() - start)/60}"

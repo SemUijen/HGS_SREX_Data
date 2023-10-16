@@ -29,8 +29,6 @@ if __name__ == "__main__":
 
     indexSampler = IndexSampler(array_group1.max())
 
-
-
     sol1 = []
     sol2 = []
     sol3 = []
@@ -49,7 +47,7 @@ if __name__ == "__main__":
     sol7_id = []
     sol8_id = []
     sol9_id = []
-    for i in range(6,8):
+    for i in range(36,38):
         i1, i2, i3, i4, i5, i6, i7, i8, i9 = i,i,i,i,i,i,i,i,i
         sol1.append(list(array_sol1[array_group1 == i1]))
         sol2.append(list(array_sol2[array_group2 == i2]))

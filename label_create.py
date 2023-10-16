@@ -12,7 +12,7 @@ import logging
 def main_grid(iter_id, instance_name, solutions, solution_ids):
 
     start = time.perf_counter()
-    logging.info(f"started_{iter_id} -- nrGroups: {len(solution_ids)} -- started at: {datetime.datetime.now()}")
+    logging.warning(f"started_{iter_id} -- nrGroups: {len(solution_ids)} -- started at: {datetime.datetime.now()}")
     print(f"started_{iter_id} -- nrGroups: {len(solution_ids)} -- started at: {datetime.datetime.now()}")
     for group_id in range(len(solution_ids)):
 
@@ -82,8 +82,8 @@ def main_grid(iter_id, instance_name, solutions, solution_ids):
                             if idx1 == idx2 or idx2 == 0:
                                 limited_improvements += 1
 
-
-
+            logging.warning(
+                f"finished_{instance_name[group_id]} -- label shape: {label_shape} -- started at: {datetime.datetime.now()}")
             total_options = numR_P1 * numR_P2 * (Max_to_move - 1)
             limited_options = max(numR_P1, numR_P2) * (Max_to_move - 1)
             labels.append(label_improv)
@@ -110,7 +110,7 @@ def main_grid(iter_id, instance_name, solutions, solution_ids):
 def main_full(iter_id, instance_name, solutions, solution_ids):
 
     start = time.perf_counter()
-    logging.info(f"started_{iter_id} -- nrGroups: {len(solution_ids)} -- started at: {datetime.datetime.now()}")
+    logging.warning(f"started_{iter_id} -- nrGroups: {len(solution_ids)} -- started at: {datetime.datetime.now()}")
     print(f"started_{iter_id} -- nrGroups: {len(solution_ids)} -- started at: {datetime.datetime.now()}")
     for group_id in range(len(solution_ids)):
 
@@ -178,7 +178,8 @@ def main_full(iter_id, instance_name, solutions, solution_ids):
             labels_cat.append(label_categ)
             random_acc_list.append(total_improvements / total_options)
             lim_random_acc_list.append(limited_improvements / limited_options)
-
+            logging.warning(
+                f"finished_{instance_name[group_id]} -- label shape: {label_shape} -- started at: {datetime.datetime.now()}")
 
 
     raw_data = {

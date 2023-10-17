@@ -16,7 +16,7 @@ def main_grid(iter_id, instance_name, solutions, solution_ids):
     print(f"started_{iter_id} -- nrGroups: {len(solution_ids)} -- started at: {datetime.datetime.now()}")
     for group_id in range(len(solution_ids)):
 
-        if instance_name[group_id] in ["R2_8_9", 'RC2_10_5']:
+        if instance_name[group_id] in ["R2_8_9", 'R1_4_10']:
             INSTANCE = read(f"data/route_instances/{instance_name[group_id]}.vrp", round_func="round", instance_format="solomon")
         else:
             INSTANCE = read(f"data/route_instances/{instance_name[group_id]}.vrp", round_func="round")
@@ -111,10 +111,10 @@ def main_full(iter_id, instance_name, solutions, solution_ids):
 
     start = time.perf_counter()
     logging.warning(f"started_{iter_id} -- nrGroups: {len(solution_ids)} -- started at: {datetime.datetime.now()}")
-    print(f"started_{iter_id} -- nrGroups: {len(solution_ids)} -- started at: {datetime.datetime.now()}")
+
     for group_id in range(len(solution_ids)):
 
-        if instance_name[group_id] in ["R2_8_9", 'RC2_10_5']:
+        if instance_name[group_id] in ["R2_8_9", 'R1_4_10']:
             INSTANCE = read(f"data/route_instances/{instance_name[group_id]}.vrp", round_func="round", instance_format="solomon")
         else:
             INSTANCE = read(f"data/route_instances/{instance_name[group_id]}.vrp", round_func="round")
@@ -171,7 +171,7 @@ def main_full(iter_id, instance_name, solutions, solution_ids):
                             if idx1 == idx2 or idx2 == 0:
                                 limited_improvements += 1
 
-            logging.warning(f"finished_{instance_name[group_id]} -- label shape: {label_shape} -- started at: {datetime.datetime.now()}")
+            logging.warning(f"finished: {instance_name[group_id]}-{iter_id} -- label shape: {label_shape} -- at: {datetime.datetime.now()}")
             total_options = numR_P1 * numR_P2 * (Max_to_move - 1)
             limited_options = max(numR_P1, numR_P2) * (Max_to_move - 1)
             labels.append(label_improv)
@@ -192,5 +192,5 @@ def main_full(iter_id, instance_name, solutions, solution_ids):
     }
     with open(f"data/raw_model_data/batch_{iter_id}_rawdata.pkl", "wb") as handle:
         pickle.dump(raw_data, handle)
-    logging.warning(f"Process finished {iter_id}: time in minutes= {(time.perf_counter() - start)/60}")
+    logging.warning(f"Process finished {instance_name}-{iter_id}: time in minutes= {(time.perf_counter() - start)/60}")
     return f"Process finished {iter_id}: time in minutes= {(time.perf_counter() - start)/60}"

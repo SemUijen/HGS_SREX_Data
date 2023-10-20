@@ -2,7 +2,6 @@ import pickle
 import numpy as np
 from pyvrp import read, Solution
 
-
 def read_input(instance_name: str, solomon: bool = False):
     with open(f"data/solutions/{instance_name}.pkl", 'rb') as handle:
         sol_data = pickle.load(handle)

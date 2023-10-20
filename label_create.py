@@ -148,19 +148,21 @@ def main_full(iter_id, instance_name, solutions, solution_ids):
             numR_P2 = parent2.num_routes()
             Max_to_move = min(numR_P1, numR_P2)
 
-            label_shape = (numR_P1, numR_P2, Max_to_move - 1)
+            label_shape = (numR_P1, numR_P2, Max_to_move)
             label_improv = []
             label_categ = []
 
             # alternate starting indices
             # grid_id is used to create a grid within the matrix that is calculated
-            for numRoutesMove in range(1, Max_to_move):
+            for numRoutesMove in range(1, Max_to_move+1):
                 for idx1 in range(0, numR_P1):
                     for idx2 in range(0, numR_P2):
 
                         abs_improv, category = solve_srex_options(data=INSTANCE, seed=42, couple=(parent1, parent2),
                                                                   idx=(idx1, idx2), couple_id=couple_id, capP=cap_pen,
                                                                   twP=tw_pen, moves=numRoutesMove)
+
+                        abs_improv, category = (1,0)
                         label_improv.append(abs_improv)
                         label_categ.append(category)
 
@@ -171,13 +173,12 @@ def main_full(iter_id, instance_name, solutions, solution_ids):
                                 limited_improvements += 1
 
             logging.warning(f"finished: {instance_name[group_id]}-{iter_id} -- label shape: {label_shape} -- at: {datetime.datetime.now()}")
-            total_options = numR_P1 * numR_P2 * (Max_to_move - 1)
-            limited_options = max(numR_P1, numR_P2) * (Max_to_move - 1)
+            total_options = numR_P1 * numR_P2 * (Max_to_move)
+            limited_options = max(numR_P1, numR_P2) * (Max_to_move)
             labels.append(label_improv)
             labels_cat.append(label_categ)
             random_acc_list.append(total_improvements / total_options)
             lim_random_acc_list.append(limited_improvements / limited_options)
-
 
 
     raw_data = {

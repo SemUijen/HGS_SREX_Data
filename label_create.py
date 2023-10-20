@@ -161,7 +161,7 @@ def main_full(iter_id, instance_name, solutions, solution_ids):
                                                                   idx=(idx1, idx2), couple_id=couple_id, capP=cap_pen,
                                                                   twP=tw_pen, moves=numRoutesMove)
 
-                        abs_improv, category = (1,4)
+
                         label_improv.append(abs_improv)
                         label_categ.append(category)
 

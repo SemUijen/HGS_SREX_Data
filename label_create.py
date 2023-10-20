@@ -168,12 +168,12 @@ def main_full(iter_id, instance_name, solutions, solution_ids):
                         # Calculating accuracy
                         if category == 4:
                             total_improvements += 1
-                            if idx1 == idx2 or (idx1 > numR_P2 and idx2 == 0):
+                            if idx1 == idx2 or (idx1 >= numR_P2 and idx2 == 0):
                                 limited_improvements += 1
 
             logging.warning(f"finished: {instance_name[group_id]}-{iter_id} -- label shape: {label_shape} -- at: {datetime.datetime.now()}")
-            total_options = numR_P1 * numR_P2 * (Max_to_move)
-            limited_options = max(numR_P1, numR_P2) * (Max_to_move)
+            total_options = numR_P1 * numR_P2 * Max_to_move
+            limited_options = numR_P1 * Max_to_move
 
             labels.append(label_improv)
             labels_cat.append(label_categ)

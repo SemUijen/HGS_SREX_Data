@@ -112,7 +112,12 @@ def main_full(iter_id, instance_name, solutions, solution_ids):
 
     start = time.perf_counter()
     logging.warning(f"started_{iter_id} -- nrGroups: {len(solution_ids)} -- started at: {datetime.datetime.now()}")
+    couple_id_list = []
+    labels = []
+    labels_cat = []
 
+    random_acc_list = []
+    lim_random_acc_list = []
     for group_id in range(len(solution_ids)):
 
         if instance_name[group_id] in ["R2_8_9", 'R1_4_10']:
@@ -120,20 +125,14 @@ def main_full(iter_id, instance_name, solutions, solution_ids):
         else:
             INSTANCE = read(f"data/route_instances/{instance_name[group_id]}.vrp", round_func="round")
 
-        labels = []
-        labels_cat = []
 
-        random_acc_list = []
-        lim_random_acc_list = []
-        couple_id_list = []
-        solution_list = []
         couple_id = 0
         cap_pen = 200
         tw_pen = 4
 
         couple_ids = list(map(tuple, permutations(solution_ids[group_id], r=2)))
         couple_id_list.extend(couple_ids)
-        solution_list.extend(solutions)
+
         couple_iter = permutations([1, 2, 3, 4], r=2)
 
         sol_group = solutions[group_id]
@@ -162,19 +161,20 @@ def main_full(iter_id, instance_name, solutions, solution_ids):
                                                                   idx=(idx1, idx2), couple_id=couple_id, capP=cap_pen,
                                                                   twP=tw_pen, moves=numRoutesMove)
 
-                        abs_improv, category = (1,0)
+                        abs_improv, category = (1,4)
                         label_improv.append(abs_improv)
                         label_categ.append(category)
 
                         # Calculating accuracy
                         if category == 4:
                             total_improvements += 1
-                            if idx1 == idx2 or idx2 == 0:
+                            if idx1 == idx2 or (idx1 > numR_P2 and idx2 == 0):
                                 limited_improvements += 1
 
             logging.warning(f"finished: {instance_name[group_id]}-{iter_id} -- label shape: {label_shape} -- at: {datetime.datetime.now()}")
             total_options = numR_P1 * numR_P2 * (Max_to_move)
             limited_options = max(numR_P1, numR_P2) * (Max_to_move)
+
             labels.append(label_improv)
             labels_cat.append(label_categ)
             random_acc_list.append(total_improvements / total_options)

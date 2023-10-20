@@ -157,11 +157,11 @@ def main_full(iter_id, instance_name, solutions, solution_ids):
                 for idx1 in range(0, numR_P1):
                     for idx2 in range(0, numR_P2):
 
-                        abs_improv, category = solve_srex_options(data=INSTANCE, seed=42, couple=(parent1, parent2),
-                                                                  idx=(idx1, idx2), couple_id=couple_id, capP=cap_pen,
-                                                                  twP=tw_pen, moves=numRoutesMove)
+                        # abs_improv, category = solve_srex_options(data=INSTANCE, seed=42, couple=(parent1, parent2),
+                        #                                           idx=(idx1, idx2), couple_id=couple_id, capP=cap_pen,
+                        #                                           twP=tw_pen, moves=numRoutesMove)
 
-
+                        abs_improv, category = (1,2)
                         label_improv.append(abs_improv)
                         label_categ.append(category)
 

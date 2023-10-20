@@ -35,9 +35,9 @@ if __name__ == "__main__":
     sampler8 = IndexSampler(list(sampler8))
     sampler9 = IndexSampler(list(sampler9))
 
-
+    i = 0
     pool_iterable = []
-    for i in range(384):
+    for _ in range(384):
         i1 = sampler1.sample_index()
         i2 = sampler2.sample_index()
         i3 = sampler3.sample_index()
@@ -60,7 +60,7 @@ if __name__ == "__main__":
         temp_ids.append(list(array_sol4_ids[array_group4 == i4]))
 
         pool_iterable.append((i, instance_names, temp_sols, temp_ids))
-
+        i+=1
         # CVRP group1
         temp_ids = []
         temp_sols = []
@@ -73,7 +73,7 @@ if __name__ == "__main__":
         temp_ids.append(list(array_sol6_ids[array_group6 == i6]))
 
         pool_iterable.append((i, instance_names, temp_sols, temp_ids))
-
+        i+=1
         # VPRTW-instances
         temp_ids = []
         temp_sols = []

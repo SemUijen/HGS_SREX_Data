@@ -149,8 +149,8 @@ def main_full(iter_id, instance_name, solutions, solution_ids):
             Max_to_move = min(numR_P1, numR_P2)
 
             label_shape = (numR_P1, numR_P2, Max_to_move - 1)
-            label_improv = np.zeros(label_shape, dtype=float)
-            label_categ = np.zeros(label_shape, dtype=int)
+            label_improv = []
+            label_categ = []
 
             # alternate starting indices
             # grid_id is used to create a grid within the matrix that is calculated
@@ -161,8 +161,8 @@ def main_full(iter_id, instance_name, solutions, solution_ids):
                         abs_improv, category = solve_srex_options(data=INSTANCE, seed=42, couple=(parent1, parent2),
                                                                   idx=(idx1, idx2), couple_id=couple_id, capP=cap_pen,
                                                                   twP=tw_pen, moves=numRoutesMove)
-                        label_improv[(idx1, idx2, numRoutesMove - 1)] = abs_improv
-                        label_categ[(idx1, idx2, numRoutesMove - 1)] = category
+                        label_improv.append(abs_improv)
+                        label_categ.append(category)
 
                         # Calculating accuracy
                         if category == 4:

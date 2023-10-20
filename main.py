@@ -15,25 +15,41 @@ if __name__ == "__main__":
     instance_names = ["X-n439-k37", "X-n393-k38", "X-n449-k29", "ORTEC-n405-k18", "ORTEC-n510-k23", "X-n573-k30",
                       "ORTEC-VRPTW-ASYM-0bdff870-d1-n458-k35", "R2_8_9", 'R1_4_10']
 
-    array_sol1, array_sol1_ids, array_group1 = read_input("X-n439-k37")
-    array_sol2, array_sol2_ids, array_group2 = read_input("X-n393-k38")
-    array_sol3, array_sol3_ids, array_group3 = read_input("X-n449-k29")
-    array_sol4, array_sol4_ids, array_group4 = read_input("ORTEC-n405-k18")
-    array_sol5, array_sol5_ids, array_group5 = read_input("ORTEC-n510-k23")
-    array_sol6, array_sol6_ids, array_group6 = read_input("X-n573-k30")
-    array_sol7, array_sol7_ids, array_group7 = read_input("ORTEC-VRPTW-ASYM-0bdff870-d1-n458-k35")
-    array_sol8, array_sol8_ids, array_group8 = read_input("R2_8_9", solomon=True)
-    array_sol9, array_sol9_ids, array_group9 = read_input('R1_4_10', solomon=True)
+    array_sol1, array_sol1_ids, array_group1, sampler1 = read_input("X-n439-k37")
+    array_sol2, array_sol2_ids, array_group2, sampler2 = read_input("X-n393-k38")
+    array_sol3, array_sol3_ids, array_group3, sampler3 = read_input("X-n449-k29")
+    array_sol4, array_sol4_ids, array_group4, sampler4 = read_input("ORTEC-n405-k18")
+    array_sol5, array_sol5_ids, array_group5, sampler5 = read_input("ORTEC-n510-k23")
+    array_sol6, array_sol6_ids, array_group6, sampler6 = read_input("X-n573-k30")
+    array_sol7, array_sol7_ids, array_group7, sampler7 = read_input("ORTEC-VRPTW-ASYM-0bdff870-d1-n458-k35")
+    array_sol8, array_sol8_ids, array_group8, sampler8 = read_input("R2_8_9", solomon=True)
+    array_sol9, array_sol9_ids, array_group9, sampler9 = read_input('R1_4_10', solomon=True)
 
+    sampler1 = IndexSampler(list(sampler1))
+    sampler2 = IndexSampler(list(sampler2))
+    sampler3 = IndexSampler(list(sampler3))
+    sampler4 = IndexSampler(list(sampler4))
+    sampler5 = IndexSampler(list(sampler5))
+    sampler6 = IndexSampler(list(sampler6))
+    sampler7 = IndexSampler(list(sampler7))
+    sampler8 = IndexSampler(list(sampler8))
+    sampler9 = IndexSampler(list(sampler9))
 
-    sampler = IndexSampler(50)
 
     pool_iterable = []
-    for i in range(16):
+    for i in range(384):
         temp_ids = []
         temp_sols = []
 
-        i1, i2, i3, i4, i5, i6, i7, i8, i9 = sampler.sample_index()
+        i1 = sampler1.sample_index()
+        i2 = sampler2.sample_index()
+        i3 = sampler3.sample_index()
+        i4 = sampler4.sample_index()
+        i5 = sampler5.sample_index()
+        i6 = sampler6.sample_index()
+        i7 = sampler7.sample_index()
+        i8 = sampler8.sample_index()
+        i9 = sampler9.sample_index()
 
         temp_sols.append(list(array_sol1[array_group1 == i1]))
         temp_sols.append(list(array_sol2[array_group2 == i2]))
@@ -58,9 +74,7 @@ if __name__ == "__main__":
         pool_iterable.append((i, instance_names, temp_sols, temp_ids))
 
 
-
-
-    with Pool(processes=1) as pool:
+    with Pool() as pool:
         iter_batches = pool.starmap(main_full, pool_iterable)
 
         for iter_batch in iter_batches:

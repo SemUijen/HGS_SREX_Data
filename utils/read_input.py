@@ -18,4 +18,4 @@ def read_input(instance_name: str, solomon: bool = False):
         sol = Solution(data=INSTANCE, routes=solution_route)
         solution_list.append(sol)
 
-    return np.array(solution_list), np.array(sol_data['solution_id']), np.array(sol_data['sol_group_indices'])
+    return np.array(solution_list), np.array(sol_data['solution_id']), np.array(sol_data['sol_group_indices']), sol_data['sol_group_idx_sample']

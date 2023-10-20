@@ -38,9 +38,6 @@ if __name__ == "__main__":
 
     pool_iterable = []
     for i in range(384):
-        temp_ids = []
-        temp_sols = []
-
         i1 = sampler1.sample_index()
         i2 = sampler2.sample_index()
         i3 = sampler3.sample_index()
@@ -51,22 +48,39 @@ if __name__ == "__main__":
         i8 = sampler8.sample_index()
         i9 = sampler9.sample_index()
 
+        # CVRP group1
+        temp_ids = []
+        temp_sols = []
         temp_sols.append(list(array_sol1[array_group1 == i1]))
         temp_sols.append(list(array_sol2[array_group2 == i2]))
-        temp_sols.append(list(array_sol3[array_group3 == i3]))
         temp_sols.append(list(array_sol4[array_group4 == i4]))
+
+        temp_ids.append(list(array_sol1_ids[array_group1 == i1]))
+        temp_ids.append(list(array_sol2_ids[array_group2 == i2]))
+        temp_ids.append(list(array_sol4_ids[array_group4 == i4]))
+
+        pool_iterable.append((i, instance_names, temp_sols, temp_ids))
+
+        # CVRP group1
+        temp_ids = []
+        temp_sols = []
+        temp_sols.append(list(array_sol3[array_group3 == i3]))
         temp_sols.append(list(array_sol5[array_group5 == i5]))
         temp_sols.append(list(array_sol6[array_group6 == i6]))
+
+        temp_ids.append(list(array_sol3_ids[array_group3 == i3]))
+        temp_ids.append(list(array_sol5_ids[array_group5 == i5]))
+        temp_ids.append(list(array_sol6_ids[array_group6 == i6]))
+
+        pool_iterable.append((i, instance_names, temp_sols, temp_ids))
+
+        # VPRTW-instances
+        temp_ids = []
+        temp_sols = []
         temp_sols.append(list(array_sol7[array_group7 == i7]))
         temp_sols.append(list(array_sol8[array_group8 == i8]))
         temp_sols.append(list(array_sol9[array_group9 == i9]))
 
-        temp_ids.append(list(array_sol1_ids[array_group1 == i1]))
-        temp_ids.append(list(array_sol2_ids[array_group2 == i2]))
-        temp_ids.append(list(array_sol3_ids[array_group3 == i3]))
-        temp_ids.append(list(array_sol4_ids[array_group4 == i4]))
-        temp_ids.append(list(array_sol5_ids[array_group5 == i5]))
-        temp_ids.append(list(array_sol6_ids[array_group6 == i6]))
         temp_ids.append(list(array_sol7_ids[array_group7 == i7]))
         temp_ids.append(list(array_sol8_ids[array_group8 == i8]))
         temp_ids.append(list(array_sol9_ids[array_group9 == i9]))

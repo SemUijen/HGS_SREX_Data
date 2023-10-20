@@ -63,6 +63,7 @@ def main_grid(iter_id, instance_name, solutions, solution_ids):
                 grid_id = 1
                 begin_id = 1
 
+            #TODO first check if this still works when moving numRoutesMove up
             for idx1 in range(0, numR_P1):
                 if numR_P2 % 2 == 0:
                     grid_id = 2 if grid_id == 1 else 1
@@ -153,17 +154,15 @@ def main_full(iter_id, instance_name, solutions, solution_ids):
 
             # alternate starting indices
             # grid_id is used to create a grid within the matrix that is calculated
-
-            for idx1 in range(0, numR_P1):
-                for idx2 in range(0, numR_P2):
-                    for numRoutesMove in range(1, Max_to_move):
+            for numRoutesMove in range(1, Max_to_move):
+                for idx1 in range(0, numR_P1):
+                    for idx2 in range(0, numR_P2):
 
                         abs_improv, category = solve_srex_options(data=INSTANCE, seed=42, couple=(parent1, parent2),
                                                                   idx=(idx1, idx2), couple_id=couple_id, capP=cap_pen,
                                                                   twP=tw_pen, moves=numRoutesMove)
                         label_improv[(idx1, idx2, numRoutesMove - 1)] = abs_improv
                         label_categ[(idx1, idx2, numRoutesMove - 1)] = category
-
 
                         # Calculating accuracy
                         if category == 4:

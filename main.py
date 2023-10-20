@@ -38,7 +38,7 @@ if __name__ == "__main__":
     cvrp = 0
     tw = 0
     pool_iterable = []
-    for _ in range(1):
+    for _ in range(3):
         i1 = sampler1.sample_index()
         i2 = sampler2.sample_index()
         i3 = sampler3.sample_index()
@@ -52,6 +52,7 @@ if __name__ == "__main__":
         # CVRP group1
         temp_ids = []
         temp_sols = []
+        instance_names = ["X-n439-k37", "X-n393-k38","ORTEC-n405-k18"]
         temp_sols.append(list(array_sol1[array_group1 == i1]))
         temp_sols.append(list(array_sol2[array_group2 == i2]))
         temp_sols.append(list(array_sol4[array_group4 == i4]))
@@ -66,6 +67,7 @@ if __name__ == "__main__":
         # CVRP group1
         temp_ids = []
         temp_sols = []
+        instance_names = ["X-n449-k29", "ORTEC-n510-k23", "X-n573-k30"]
         temp_sols.append(list(array_sol3[array_group3 == i3]))
         temp_sols.append(list(array_sol5[array_group5 == i5]))
         temp_sols.append(list(array_sol6[array_group6 == i6]))
@@ -80,6 +82,7 @@ if __name__ == "__main__":
         # VPRTW-instances
         temp_ids = []
         temp_sols = []
+        instance_names = ["ORTEC-VRPTW-ASYM-0bdff870-d1-n458-k35", "R2_8_9", 'R1_4_10']
         temp_sols.append(list(array_sol7[array_group7 == i7]))
         temp_sols.append(list(array_sol8[array_group8 == i8]))
         temp_sols.append(list(array_sol9[array_group9 == i9]))

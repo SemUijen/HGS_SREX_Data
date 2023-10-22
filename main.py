@@ -35,6 +35,10 @@ if __name__ == "__main__":
     sampler8 = IndexSampler(list(sampler8))
     sampler9 = IndexSampler(list(sampler9))
 
+    c1_groups_used = {}
+    c2_groups_used = {}
+    tw_groups_used = {}
+
     cvrp = 0
     tw = 0
     pool_iterable = []
@@ -52,7 +56,7 @@ if __name__ == "__main__":
         # CVRP group1
         temp_ids = []
         temp_sols = []
-        instance_names = ["X-n439-k37", "X-n393-k38","ORTEC-n405-k18"]
+        instance_names = ["X-n439-k37", "X-n393-k38", "ORTEC-n405-k18"]
         temp_sols.append(list(array_sol1[array_group1 == i1]))
         temp_sols.append(list(array_sol2[array_group2 == i2]))
         temp_sols.append(list(array_sol4[array_group4 == i4]))
@@ -62,7 +66,8 @@ if __name__ == "__main__":
         temp_ids.append(list(array_sol4_ids[array_group4 == i4]))
 
         pool_iterable.append((f'cvrp_{cvrp}', instance_names, temp_sols, temp_ids))
-        cvrp+=1
+        c1_groups_used[cvrp] = [i1, i2, i4]
+        cvrp += 1
 
         # CVRP group2
         temp_ids = []
@@ -77,7 +82,8 @@ if __name__ == "__main__":
         temp_ids.append(list(array_sol6_ids[array_group6 == i6]))
 
         pool_iterable.append((f'cvrp_{cvrp}', instance_names, temp_sols, temp_ids))
-        cvrp+=1
+        c2_groups_used[cvrp] = [i3, i5, i6]
+        cvrp += 1
 
         # VPRTW-instances
         temp_ids = []
@@ -92,10 +98,14 @@ if __name__ == "__main__":
         temp_ids.append(list(array_sol9_ids[array_group9 == i9]))
 
         pool_iterable.append((f'tw_{tw}', instance_names, temp_sols, temp_ids))
+        tw_groups_used[tw] = [i7, i8, i9]
         tw += 1
 
+    print(c_groups_used)
+
+    """
     with Pool() as pool:
         iter_batches = pool.starmap(main_full, pool_iterable)
 
         for iter_batch in iter_batches:
-            print(iter_batch)
+            print(iter_batch)"""

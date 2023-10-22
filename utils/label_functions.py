@@ -13,7 +13,7 @@ def get_category_label(
         cost_evaluator: CostEvaluator
 ):
     """
-    Creates category valuu given offspring and parents
+    Creates category value given offspring and parents
 
     Categories:
         0: offspring is fully equal to on of the parents
@@ -25,23 +25,24 @@ def get_category_label(
     """
 
     parent1, parent2 = couple
+    ls_cost = cost_evaluator.penalised_cost(offspring_ls)
+    parent1_cost = cost_evaluator.penalised_cost(parent1)
+    parent2_cost = cost_evaluator.penalised_cost(parent2)
 
-    if parent1 == offspring_srex or offspring_srex == parent1 or offspring_ls == parent1 or offspring_ls == parent2:
+    if ls_cost < min(parent1_cost, parent2_cost):
+        return 4
+
+    if offspring_srex == parent1 or offspring_srex == parent2 or offspring_ls == parent1 or offspring_ls == parent2:
         return 0
 
     if not offspring_ls.is_feasible():
         return 1
 
-    ls_cost = cost_evaluator.penalised_cost(offspring_ls)
-    parent1_cost = cost_evaluator.penalised_cost(parent1)
-    parent2_cost = cost_evaluator.penalised_cost(parent2)
-
     if ls_cost > min(parent1_cost, parent2_cost):
         return 2
     if ls_cost == min(parent1_cost, parent2_cost):
         return 3
-    if ls_cost < min(parent1_cost, parent2_cost):
-        return 4
+
 
     raise "Solution has no category?"
 
@@ -85,3 +86,5 @@ def solve_srex_options(
                                      cost_evaluator=cost_evaluator)
 
     return improv_value, categ_value
+
+

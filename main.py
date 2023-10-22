@@ -38,7 +38,7 @@ if __name__ == "__main__":
     cvrp = 0
     tw = 0
     pool_iterable = []
-    for _ in range(3):
+    for _ in range(4):
         i1 = sampler1.sample_index()
         i2 = sampler2.sample_index()
         i3 = sampler3.sample_index()
@@ -64,7 +64,7 @@ if __name__ == "__main__":
         pool_iterable.append((f'cvrp_{cvrp}', instance_names, temp_sols, temp_ids))
         cvrp+=1
 
-        # CVRP group1
+        # CVRP group2
         temp_ids = []
         temp_sols = []
         instance_names = ["X-n449-k29", "ORTEC-n510-k23", "X-n573-k30"]

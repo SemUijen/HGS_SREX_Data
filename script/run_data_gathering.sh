@@ -8,8 +8,8 @@
 
 #SBATCH --partition=genoa
 #SBATCH --nodes=1
-#SBATCH --ntasks=18
-#SBATCH --time=04:00:00
+#SBATCH --ntasks=16
+#SBATCH --time=07:00:00
 
 #SBATCH --mail-type=BEGIN,END,FAIL
 #SBATCH --mail-user=s.j.uijen@tilburguniversity.edu

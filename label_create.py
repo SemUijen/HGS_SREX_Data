@@ -9,15 +9,16 @@ from utils.label_functions import solve_srex_options
 from pyvrp import read
 import logging
 
-def main_grid(iter_id, instance_name, solutions, solution_ids):
 
+def main_grid(iter_id, instance_name, solutions, solution_ids):
     start = time.perf_counter()
     logging.warning(f"started_{iter_id} -- nrGroups: {len(solution_ids)} -- started at: {datetime.datetime.now()}")
     print(f"started_{iter_id} -- nrGroups: {len(solution_ids)} -- started at: {datetime.datetime.now()}")
     for group_id in range(len(solution_ids)):
 
         if instance_name[group_id] in ["R2_8_9", 'R1_4_10']:
-            INSTANCE = read(f"data/route_instances/{instance_name[group_id]}.vrp", round_func="round", instance_format="solomon")
+            INSTANCE = read(f"data/route_instances/{instance_name[group_id]}.vrp", round_func="round",
+                            instance_format="solomon")
         else:
             INSTANCE = read(f"data/route_instances/{instance_name[group_id]}.vrp", round_func="round")
 
@@ -53,7 +54,8 @@ def main_grid(iter_id, instance_name, solutions, solution_ids):
             label_shape = (numR_P1, numR_P2, Max_to_move - 1)
             label_improv = np.zeros(label_shape, dtype=float)
             label_categ = np.zeros(label_shape, dtype=int)
-            logging.warning(f"started_{instance_name[group_id]} -- label shape: {label_shape} -- started at: {datetime.datetime.now()}")
+            logging.warning(
+                f"started_{instance_name[group_id]} -- label shape: {label_shape} -- started at: {datetime.datetime.now()}")
             # alternate starting indices
             # grid_id is used to create a grid within the matrix that is calculated
             if begin_id == 1:
@@ -63,7 +65,7 @@ def main_grid(iter_id, instance_name, solutions, solution_ids):
                 grid_id = 1
                 begin_id = 1
 
-            #TODO first check if this still works when moving numRoutesMove up
+            # TODO first check if this still works when moving numRoutesMove up
             for idx1 in range(0, numR_P1):
                 if numR_P2 % 2 == 0:
                     grid_id = 2 if grid_id == 1 else 1
@@ -92,7 +94,6 @@ def main_grid(iter_id, instance_name, solutions, solution_ids):
             random_acc_list.append(total_improvements / total_options)
             lim_random_acc_list.append(limited_improvements / limited_options)
 
-
     raw_data = {
         "parent_routes": solution_list,
         "parent_couple_idx": couple_id_list,
@@ -105,11 +106,10 @@ def main_grid(iter_id, instance_name, solutions, solution_ids):
         pickle.dump(raw_data, handle)
 
     logging.info(f"Process finished {iter_id}: time in minutes= {(time.perf_counter() - start) / 60}")
-    return f"Process finished {iter_id}: time in minutes= {(time.perf_counter() - start)/60}"
+    return f"Process finished {iter_id}: time in minutes= {(time.perf_counter() - start) / 60}"
 
 
 def main_full(iter_id, instance_name, solutions, solution_ids):
-
     start = time.perf_counter()
     logging.warning(f"started_{iter_id} -- nrGroups: {len(solution_ids)} -- started at: {datetime.datetime.now()}")
     couple_id_list = []
@@ -121,20 +121,24 @@ def main_full(iter_id, instance_name, solutions, solution_ids):
     for group_id in range(len(solution_ids)):
 
         if instance_name[group_id] in ["R2_8_9", 'R1_4_10']:
-            INSTANCE = read(f"data/route_instances/{instance_name[group_id]}.vrp", round_func="round", instance_format="solomon")
+            INSTANCE = read(f"data/route_instances/{instance_name[group_id]}.vrp", round_func="round",
+                            instance_format="solomon")
         else:
             INSTANCE = read(f"data/route_instances/{instance_name[group_id]}.vrp", round_func="round")
-
 
         couple_id = 0
         cap_pen = 200
         tw_pen = 4
 
+        batch_label = []
+        batch_label_cat = []
+        batch_label_acc = []
+        batch_label_acc_lim = []
+
         couple_ids = list(map(tuple, permutations(solution_ids[group_id], r=2)))
-        couple_id_list.extend(couple_ids)
+        couple_id_list.append(couple_ids)
 
         couple_iter = permutations([1, 2, 3, 4], r=2)
-
         sol_group = solutions[group_id]
 
         for sol_idx1, sol_idx2 in couple_iter:
@@ -151,17 +155,14 @@ def main_full(iter_id, instance_name, solutions, solution_ids):
             label_improv = []
             label_categ = []
 
-            # alternate starting indices
-            # grid_id is used to create a grid within the matrix that is calculated
-            for numRoutesMove in range(1, Max_to_move+1):
+            for numRoutesMove in range(1, Max_to_move + 1):
                 for idx1 in range(0, numR_P1):
                     for idx2 in range(0, numR_P2):
 
-                        # abs_improv, category = solve_srex_options(data=INSTANCE, seed=42, couple=(parent1, parent2),
-                        #                                           idx=(idx1, idx2), couple_id=couple_id, capP=cap_pen,
-                        #                                           twP=tw_pen, moves=numRoutesMove)
+                        abs_improv, category = solve_srex_options(data=INSTANCE, seed=42, couple=(parent1, parent2),
+                                                                  idx=(idx1, idx2), couple_id=couple_id, capP=cap_pen,
+                                                                  twP=tw_pen, moves=numRoutesMove)
 
-                        abs_improv, category = (1,2)
                         label_improv.append(abs_improv)
                         label_categ.append(category)
 
@@ -171,26 +172,33 @@ def main_full(iter_id, instance_name, solutions, solution_ids):
                             if idx1 == idx2 or (idx1 >= numR_P2 and idx2 == 0):
                                 limited_improvements += 1
 
-            logging.warning(f"finished: {instance_name[group_id]}-{iter_id} -- label shape: {label_shape} -- at: {datetime.datetime.now()}")
+            logging.warning(
+                f"finished: {instance_name[group_id]}-{iter_id} -- label shape: {label_shape} -- at: {datetime.datetime.now()}")
             total_options = numR_P1 * numR_P2 * Max_to_move
             limited_options = numR_P1 * Max_to_move
 
-            labels.append(label_improv)
-            labels_cat.append(label_categ)
-            random_acc_list.append(total_improvements / total_options)
-            lim_random_acc_list.append(limited_improvements / limited_options)
+            batch_label.append(label_improv)
+            batch_label_cat.append(label_categ)
+            batch_label_acc.append(total_improvements / total_options)
+            batch_label_acc_lim.append(limited_improvements / limited_options)
 
+        labels.append(batch_label)
+        labels_cat.append(batch_label_cat)
+        random_acc_list.append(batch_label_acc)
+        lim_random_acc_list.append(batch_label_acc_lim)
 
     raw_data = {
         "parent_routes": solutions,
+        "parent_ids": solution_ids,
+        "instances": instance_name,
         "parent_couple_idx": couple_id_list,
         "labels": labels,
         "labels_cat": labels_cat,
         "random_acc": random_acc_list,
         "random_acc_limit": lim_random_acc_list,
-        "runtime": (time.perf_counter() - start)/60,
     }
     with open(f"data/raw_model_data/batch_{iter_id}_rawdata.pkl", "wb") as handle:
         pickle.dump(raw_data, handle)
-    logging.warning(f"Process finished {instance_name}-{iter_id}: time in minutes= {(time.perf_counter() - start)/60}")
-    return f"Process finished {iter_id}: time in minutes= {(time.perf_counter() - start)/60}"
+    logging.warning(
+        f"Process finished {instance_name}-{iter_id}: time in minutes= {(time.perf_counter() - start) / 60}")
+    return f"Process finished {iter_id}: time in minutes= {(time.perf_counter() - start) / 60}"

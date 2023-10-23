@@ -42,7 +42,7 @@ if __name__ == "__main__":
     cvrp = 0
     tw = 0
     pool_iterable = []
-    for _ in range(4):
+    for _ in range(386):
         i1 = sampler1.sample_index()
         i2 = sampler2.sample_index()
         i3 = sampler3.sample_index()
@@ -101,11 +101,12 @@ if __name__ == "__main__":
         tw_groups_used[tw] = [i7, i8, i9]
         tw += 1
 
-    print(c_groups_used)
+    with open('groups_used.pkl', "wb") as handle:
+        pickle.dump((c1_groups_used, c2_groups_used, tw_groups_used), handle)
 
-    """
+
     with Pool() as pool:
         iter_batches = pool.starmap(main_full, pool_iterable)
 
         for iter_batch in iter_batches:
-            print(iter_batch)"""
+            print(iter_batch)
